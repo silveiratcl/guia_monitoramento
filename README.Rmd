@@ -1,8 +1,8 @@
 
 
 ---
-title: "Your Title"
-author: "Your Name"
-date: "Current Date"
+title: "Material de apoio Guia de Monitoramentoe Manejo do coral-sol"
+author: "Thiago Cesar Lima Silveira"
+date: "18/03/2026"
 output: github_document
 ---
