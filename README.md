@@ -3,11 +3,6 @@ Material de apoio Guia de Monitoramentoe Manejo do coral-sol
 Thiago Cesar Lima Silveira
 18/03/2026
 
-Aqui está o arquivo README.md em português (PT-BR), conforme sua
-solicitação.
-
-------------------------------------------------------------------------
-
 # Guia de Monitoramento e Manejo do Coral-Sol
 
 [![License](https://img.shields.io/badge/Licença-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -27,20 +22,6 @@ em São Sebastião (SP). Seu objetivo é padronizar procedimentos — desde a
 identificação da espécie até o registro, monitoramento e manejo —
 promovendo ações coordenadas e eficazes entre as diferentes unidades de
 conservação.
-
-## A Ameaça: Invasão do Coral-Sol
-
-O coral-sol é uma Espécie Exótica Invasora (EEI) introduzida
-acidentalmente nas águas brasileiras. Sua rápida expansão, alta
-capacidade reprodutiva (incluindo dispersão de larvas e o mecanismo de
-*polyp bail-out*) e resistência a variações ambientais representam uma
-séria ameaça à biodiversidade marinha nativa, incluindo corais
-endêmicos.
-
-Atualmente, a espécie está presente em diversos pontos do litoral
-brasileiro, do Ceará até Santa Catarina, ocupando costões rochosos,
-estruturas artificiais, naufrágios, píeres e plataformas de petróleo e
-gás.
 
 ## Conteúdo do Guia
 
@@ -131,7 +112,7 @@ Resposta Rápida (DPRR)** .
 
     .
     ├── README.md                 # Este arquivo
-    ├── guia_monitoramento.pdf    # Guia completo em PDF
+    ├── guia_monitoramento.pdf    # Guia completo em PDF - em desenvolvimento
     ├── supplementary/            # Pasta de materiais complementares
     │   ├── scripts/              # Exemplos de scripts para processamento de dados
     │   └── gis_templates/        # Templates de shapefiles e projetos GIS
