@@ -66,10 +66,10 @@ O guia apresenta um conjunto integrado de procedimentos organizados em torno dos
 .
 ├── README.md                 # Este arquivo
 ├── guia_monitoramento.pdf    # Guia completo em PDF - em desenvolvimento
-├── supplementary/            # Pasta de materiais complementares
-│   ├── scripts/              # Exemplos de scripts para processamento de dados
-│   └── gis_templates/        # Templates de shapefiles e projetos GIS
-└── references.bib            # Referências bibliográficas
+├── dados/                    # Amostra de dados
+├── shp/                      # Amostra de shapefiles do monitoramento
+├── plots/                    # Gráficos
+└── ...
 ```
 
 ## Contribuições
