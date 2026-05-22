@@ -10,11 +10,13 @@ library(forcats)
 # monitoring
 df_guia <- read_delim("dados/data_guia.csv")
 
-df_manejo <-  read_delim("dados/dados_manejo_guia.csv")
+df_manejo <-  read_delim("dados/dados_manejo.csv")
 
 df_guia
-
 df_manejo
+
+
+
 
 # Creating a same effort data set based on the original data with unnequal effort
 # keep just data with at least 30 minutes of monitoring (rows) and then sample 
@@ -293,4 +295,209 @@ ggsave("plots/stacked_dafor_localidade.png",
        stacked_dafor_localidade,
        width = 12, height = 6, dpi = 300)
 
+
+
+
+# library(dplyr)
+# library(tidyr)
+# library(stringr)
+# library(ggplot2)
+# library(lubridate)
+# library(readr)
+
+################################################################################
+### 1. Prepare manejo data
+################################################################################
+
+df_manejo_clean <- df_manejo |>
+  mutate(
+    localidade = str_to_upper(str_replace_all(localidade, "_", " ")),
+    data = dmy(data),
+    year = year(data),
+    massa_kg = parse_number(massa_kg,
+                            locale = locale(decimal_mark = ",")),
+    massa_kg_por_cilindro = massa_kg / n_cilindros
+  )
+
+################################################################################
+### Keep only ENGENHO and remove 2023 and 2026
+################################################################################
+
+df_manejo_clean <- df_manejo_clean %>%
+  filter(
+    localidade %in% c("ENGENHO"),
+    !year %in% c(2023, 2026)
+  )
+
+################################################################################
+### 2. Chart 1: total mass by year
+################################################################################
+
+manejo_mass_year <- df_manejo_clean |>
+  group_by(year, localidade) |>
+  summarise(
+    massa_kg = sum(massa_kg, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(year = factor(year))
+
+
+
+plot_massa_localidade_ano <- ggplot(
+  manejo_mass_year,
+  aes(x = year, y = massa_kg, fill = localidade)
+) +
+  geom_col() +
+  labs(
+    title = "Massa total manejada (Kg)",
+    x = NULL,
+    y = "Massa manejada (kg)",
+    fill = ""
+  ) +
+  scale_fill_manual(values = "orange") +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(
+      size = 16,
+      face = "bold",
+      hjust = 0.5
+    ),
+    legend.position = "none",
+    panel.grid = element_blank(),
+    axis.line = element_line(),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 14),
+    axis.title.y = element_text(size = 16)
+  )
+
+plot_massa_localidade_ano
+
+ggsave(
+  "plots/plot_massa_localidade_ano.png",
+  plot_massa_localidade_ano,
+  width = 12,
+  height = 6,
+  dpi = 300
+)
+
+################################################################################
+### 3. Chart 2: mass corrected by effort (n_cilindros)
+################################################################################
+
+manejo_mass_effort_year <- df_manejo_clean |>
+  group_by(year, localidade) |>
+  summarise(
+    massa_kg = sum(massa_kg, na.rm = TRUE),
+    n_cilindros = sum(n_cilindros, na.rm = TRUE),
+    massa_kg_por_cilindro = massa_kg / n_cilindros,
+    .groups = "drop"
+  ) |>
+  mutate(year = factor(year))
+
+plot_massa_por_cilindro_localidade_ano <- ggplot(
+  manejo_mass_effort_year,
+  aes(x = year, y = massa_kg_por_cilindro, fill = localidade)
+) +
+  geom_col() +
+  
+  geom_text(
+    aes(label = paste0("n. cilindros = ", n_cilindros)),
+    vjust = 1.5,
+    size = 5
+  ) +
+  
+  labs(
+    title = "Massa manejada por cilindro (kg/cilindro)",
+    x = NULL,
+    y = "Massa manejada por cilindro (kg/cilindro)",
+    fill = ""
+  ) +
+  scale_fill_manual(values = "orange") +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(
+      size = 16,
+      face = "bold",
+      hjust = 0.5
+    ),
+    legend.position = "none",
+    panel.grid = element_blank(),
+    axis.line = element_line(),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 14),
+    axis.title.y = element_text(size = 16)
+  )
+
+plot_massa_por_cilindro_localidade_ano
+
+ggsave(
+  "plots/plot_massa_por_cilindro_localidade_ano.png",
+  plot_massa_por_cilindro_localidade_ano,
+  width = 12,
+  height = 6,
+  dpi = 300
+)
+
+
+################################################################################
+### 4. Chart 3: mass corrected by number of management days
+################################################################################
+
+manejo_mass_day_year <- df_manejo_clean |>
+  group_by(year, localidade) |>
+  summarise(
+    massa_kg = sum(massa_kg, na.rm = TRUE),
+    n_dias_manejo = n(),
+    massa_kg_por_dia = massa_kg / n_dias_manejo,
+    .groups = "drop"
+  ) |>
+  mutate(year = factor(year))
+
+
+plot_massa_por_dia_localidade_ano <- ggplot(
+  manejo_mass_day_year,
+  aes(x = year, y = massa_kg_por_dia, fill = localidade)
+) +
+  geom_col() +
+  
+  geom_text(
+    aes(label = paste0("n. dias = ", n_dias_manejo)),
+    vjust = 1.5,
+    size = 5
+  ) +
+  
+  labs(
+    title = "Massa manejada por dia de manejo (kg/dia)",
+    x = NULL,
+    y = "Massa manejada por dia (kg/dia)",
+    fill = ""
+  ) +
+  
+  scale_fill_manual(values = "orange") +
+  
+  theme_minimal(base_size = 12) +
+  
+  theme(
+    plot.title = element_text(
+      size = 16,
+      face = "bold",
+      hjust = 0.5
+    ),
+    legend.position = "none",
+    panel.grid = element_blank(),
+    axis.line = element_line(),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 14),
+    axis.title.y = element_text(size = 16)
+  )
+
+plot_massa_por_dia_localidade_ano
+
+ggsave(
+  "plots/plot_massa_por_dia_localidade_ano.png",
+  plot_massa_por_dia_localidade_ano,
+  width = 12,
+  height = 6,
+  dpi = 300
+)
 
