@@ -5,6 +5,8 @@ library(stringr)
 library(ggplot2)
 library(ggmap)
 library(forcats)
+library(viridisLite)
+
 
 
 # monitoring
@@ -101,7 +103,7 @@ data <- df_guia_balanced |>
 if (nrow(data) == 0) stop("No data found")
 
 density_data <- data |>
-  group_by(year) |>
+  group_by(year) |> 
   mutate(
     n_trans_count = n(),
     total_dafor = sum(dafor, na.rm = TRUE)
@@ -151,6 +153,34 @@ loc_order <- data_loc |>
 cats_loc <- cats_loc |>
   mutate(localidade = factor(localidade, levels = loc_order))
 
+
+
+# Generate plasma colors
+#plasma_cols <- viridisLite::plasma(
+ 
+# n = length(unique(cats_loc$dafor_cat)),
+ # begin = 0.9,
+#  end = 0.1
+#)
+
+# Replace the lowest value color
+#plasma_cols[6] <- "#213c74"
+
+
+
+dafor_cols <- c(
+  "D"        = "#c75a24",
+  "A"        = "#eea700",
+  "F"        = "#f9e730",
+  "O"        = "#41b5ee",
+  "R"        = "#417eee",
+  "Ausente"  = "#1d3c6f"
+)
+
+
+
+
+
 stacked_dafor_localidade_balanced <- ggplot(cats_loc,
                                    aes(x = localidade, y = minutes, fill = dafor_cat)) +
   geom_col() +
@@ -160,28 +190,32 @@ stacked_dafor_localidade_balanced <- ggplot(cats_loc,
     y = "Esforco (minutos de monitoramento",
     fill = ""
   ) +
-  scale_fill_viridis_d(option = "plasma", begin = 0.9, end = 0.1) +
-  theme_minimal(base_size = 12) +
+  #scale_fill_manual(values = plasma_cols) +
+ 
+  scale_fill_manual(values = dafor_cols) +
+  
+   theme_minimal(base_size = 12) +
   theme(
     panel.grid = element_blank(),
     axis.line = element_line(),
-    axis.text.y = element_text(size = 12),
-    axis.text.x = element_text(size = 14),
+    axis.text.y = element_text(size = 20),
+    axis.text.x = element_text(size = 20),
     axis.title.y = element_blank(),
     axis.title.x = element_text(size = 16),
-    legend.text = element_text(size = 16),
-    legend.key.size = unit(.9, "cm")
+    legend.text = element_text(size = 20),
+    legend.key.size = unit(2.0, "cm")
   )
 
 x11()
 stacked_dafor_localidade_balanced
 
 ggsave("plots/stacked_dafor_localidade_balanced.png",
-       stacked_dafor_localidade,
-       width = 12, height = 6, dpi = 300)
+       stacked_dafor_localidade_balanced,
+       width = 12, height = 14, dpi = 300)
 
 
-
+print(stacked_dafor_localidade_balanced)
+################################################ parei aqui ###################
 
 ### UMBALANCED DATA ###
 
@@ -263,6 +297,23 @@ loc_order <- cats_loc  |>
 cats_loc <- cats_loc |> 
   mutate(localidade = factor(localidade, levels = loc_order))
 
+
+# Generate plasma colors
+plasma_cols <- viridisLite::plasma(
+  n = length(unique(cats_loc$dafor_cat)),
+  begin = 0.9,
+  end = 0.1
+)
+
+# Replace the lowest value color
+plasma_cols[6] <- "#213c74"
+
+
+
+
+
+
+
 # 4) Plot (horizontal)
 stacked_dafor_localidade <- ggplot(cats_loc, 
                                    aes(x = localidade, 
@@ -275,17 +326,17 @@ stacked_dafor_localidade <- ggplot(cats_loc,
     y = "Esforco (soma de minutos de monitoramento)",
     fill = ""
   ) +
-  scale_fill_viridis_d(option = "plasma", begin = 0.9, end = 0.1) +
+  scale_fill_manual(values = plasma_cols) + 
   theme_minimal(base_size = 12) +
   theme(
     panel.grid = element_blank(),
     axis.line = element_line(),
-    axis.text.y = element_text(size = 12),
-    axis.text.x = element_text(size = 14),
+    axis.text.y = element_text(size = 20),
+    axis.text.x = element_text(size = 10),
     axis.title.y = element_blank(),
     axis.title.x = element_text(size = 16),
-    legend.text = element_text(size = 16),
-    legend.key.size = unit(.9, "cm")
+    legend.text = element_text(size = 20),
+    legend.key.size = unit(2.0, "cm")
   )
 
 x11()
@@ -293,7 +344,7 @@ stacked_dafor_localidade
 
 ggsave("plots/stacked_dafor_localidade.png",
        stacked_dafor_localidade,
-       width = 12, height = 6, dpi = 300)
+       width = 12, height = 14, dpi = 300)
 
 
 
