@@ -187,7 +187,7 @@ stacked_dafor_localidade_balanced <- ggplot(cats_loc,
   coord_flip() +
   labs(
     x = NULL,
-    y = "Esforco (minutos de monitoramento",
+    y = "Esforço (minutos de monitoramento",
     fill = ""
   ) +
   #scale_fill_manual(values = plasma_cols) +
@@ -209,9 +209,9 @@ stacked_dafor_localidade_balanced <- ggplot(cats_loc,
 x11()
 stacked_dafor_localidade_balanced
 
-ggsave("plots/stacked_dafor_localidade_balanced.png",
+ggsave("plots/1_stacked_dafor_localidade_balanced.png",
        stacked_dafor_localidade_balanced,
-       width = 12, height = 14, dpi = 300)
+       width = 12, height = 13, dpi = 300)
 
 
 print(stacked_dafor_localidade_balanced)
@@ -299,14 +299,14 @@ cats_loc <- cats_loc |>
 
 
 # Generate plasma colors
-plasma_cols <- viridisLite::plasma(
-  n = length(unique(cats_loc$dafor_cat)),
-  begin = 0.9,
-  end = 0.1
-)
+#plasma_cols <- viridisLite::plasma(
+#  n = length(unique(cats_loc$dafor_cat)),
+#  begin = 0.9,
+#  end = 0.1
+#)
 
 # Replace the lowest value color
-plasma_cols[6] <- "#213c74"
+#plasma_cols[6] <- "#213c74"
 
 
 
@@ -323,16 +323,18 @@ stacked_dafor_localidade <- ggplot(cats_loc,
   coord_flip() +
   labs(
     x = NULL,
-    y = "Esforco (soma de minutos de monitoramento)",
+    y = "Esforço (minutos de monitoramento)",
     fill = ""
   ) +
-  scale_fill_manual(values = plasma_cols) + 
+  #scale_fill_manual(values = plasma_cols) + 
+  scale_fill_manual(values = dafor_cols) +
+  
   theme_minimal(base_size = 12) +
   theme(
     panel.grid = element_blank(),
     axis.line = element_line(),
     axis.text.y = element_text(size = 20),
-    axis.text.x = element_text(size = 10),
+    axis.text.x = element_text(size = 20),
     axis.title.y = element_blank(),
     axis.title.x = element_text(size = 16),
     legend.text = element_text(size = 20),
@@ -341,10 +343,10 @@ stacked_dafor_localidade <- ggplot(cats_loc,
 
 x11()
 stacked_dafor_localidade
-
-ggsave("plots/stacked_dafor_localidade.png",
+ 
+ggsave("plots/2_stacked_dafor_localidade.png",
        stacked_dafor_localidade,
-       width = 12, height = 14, dpi = 300)
+       width = 12, height = 13, dpi = 300)
 
 
 
@@ -409,25 +411,27 @@ plot_massa_localidade_ano <- ggplot(
   theme_minimal(base_size = 12) +
   theme(
     plot.title = element_text(
-      size = 16,
+      size = 22,
       face = "bold",
       hjust = 0.5
     ),
     legend.position = "none",
     panel.grid = element_blank(),
     axis.line = element_line(),
-    axis.text.x = element_text(size = 18),
-    axis.text.y = element_text(size = 14),
-    axis.title.y = element_text(size = 16)
+    axis.text.x = element_text(size = 20),
+    axis.text.y = element_text(size = 20),
+    axis.title.y = element_text(size = 20)
   )
 
+
+x11()
 plot_massa_localidade_ano
 
 ggsave(
-  "plots/plot_massa_localidade_ano.png",
+  "plots/3_plot_massa_localidade_ano.png",
   plot_massa_localidade_ano,
   width = 12,
-  height = 6,
+  height = 13,
   dpi = 300
 )
 
@@ -454,7 +458,8 @@ plot_massa_por_cilindro_localidade_ano <- ggplot(
   geom_text(
     aes(label = paste0("n. cilindros = ", n_cilindros)),
     vjust = 1.5,
-    size = 5
+    
+    size = 10
   ) +
   
   labs(
@@ -467,25 +472,26 @@ plot_massa_por_cilindro_localidade_ano <- ggplot(
   theme_minimal(base_size = 12) +
   theme(
     plot.title = element_text(
-      size = 16,
+      size = 22,
       face = "bold",
       hjust = 0.5
     ),
     legend.position = "none",
     panel.grid = element_blank(),
     axis.line = element_line(),
-    axis.text.x = element_text(size = 18),
-    axis.text.y = element_text(size = 14),
-    axis.title.y = element_text(size = 16)
+    axis.text.x = element_text(size = 20),
+    axis.text.y = element_text(size = 20),
+    axis.title.y = element_text(size = 20)
   )
 
+x11()
 plot_massa_por_cilindro_localidade_ano
 
 ggsave(
-  "plots/plot_massa_por_cilindro_localidade_ano.png",
+  "plots/4_plot_massa_por_cilindro_localidade_ano.png",
   plot_massa_por_cilindro_localidade_ano,
   width = 12,
-  height = 6,
+  height = 13,
   dpi = 300
 )
 
@@ -514,7 +520,7 @@ plot_massa_por_dia_localidade_ano <- ggplot(
   geom_text(
     aes(label = paste0("n. dias = ", n_dias_manejo)),
     vjust = 1.5,
-    size = 5
+    size = 10
   ) +
   
   labs(
@@ -530,25 +536,25 @@ plot_massa_por_dia_localidade_ano <- ggplot(
   
   theme(
     plot.title = element_text(
-      size = 16,
+      size = 22,
       face = "bold",
       hjust = 0.5
     ),
     legend.position = "none",
     panel.grid = element_blank(),
     axis.line = element_line(),
-    axis.text.x = element_text(size = 18),
-    axis.text.y = element_text(size = 14),
-    axis.title.y = element_text(size = 16)
+    axis.text.x = element_text(size = 20),
+    axis.text.y = element_text(size = 20),
+    axis.title.y = element_text(size = 20)
   )
 
 plot_massa_por_dia_localidade_ano
 
 ggsave(
-  "plots/plot_massa_por_dia_localidade_ano.png",
+  "plots/5_plot_massa_por_dia_localidade_ano.png",
   plot_massa_por_dia_localidade_ano,
   width = 12,
-  height = 6,
+  height = 13,
   dpi = 300
 )
 
