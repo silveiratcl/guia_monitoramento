@@ -1,11 +1,16 @@
 
 
 ---
-title: "Material de apoio Guia de Monitoramentoe Manejo do coral-sol"
+title: "Material de apoio do Guia de Monitoramento e Manejo do coral-sol"
 author: "Thiago Cesar Lima Silveira"
 date: "18/03/2026"
 output: github_document
 ---
+
+## Link de acesso para o Dashboard Monitoramento Coral-Sol REBIO Arvoredo
+[https://sun-coral-dash.onrender.com/](https://sun-coral-dash.onrender.com/).
+
+
 
 # Guia de Monitoramento e Manejo do Coral-Sol
 

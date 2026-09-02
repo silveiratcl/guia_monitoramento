@@ -1,7 +1,11 @@
-Material de apoio Guia de Monitoramentoe Manejo do coral-sol
+Material de apoio do Guia de Monitoramento e Manejo do coral-sol
 ================
 Thiago Cesar Lima Silveira
 18/03/2026
+
+## Link de acesso para o Dashboard Monitoramento Coral-Sol REBIO Arvoredo
+
+<https://sun-coral-dash.onrender.com/>.
 
 # Guia de Monitoramento e Manejo do Coral-Sol
 
